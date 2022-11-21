@@ -15,3 +15,7 @@
 
 ## Run API
 `node app_api.js`
+
+## Access
+GET `http://localhost:8090/`
+POST `http://localhost:8090/response-test`
