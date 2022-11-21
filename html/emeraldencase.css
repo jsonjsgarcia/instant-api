@@ -1,0 +1,6 @@
+/*http://thecodeplayer.com/walkthrough/matrix-rain-animation-html5-canvas-javascript*/
+/*basic reset*/
+* {margin: 0; padding: 0;}
+/*adding a black bg to the body to make things clearer*/
+body {background: black; overflow: hidden;}
+canvas {display: block; overflow: hidden;}

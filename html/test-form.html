@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>   
+console.log('js script');
+
+async function sendFormData()
+{
+
+    const myData = document.getElementById("thisForm");
+    const formData = new FormData(myData);
+    const obj= Object.fromEntries(formData);
+
+    const res = await fetch('/response-form', {method:'POST', body: JSON.stringify(obj), headers:{'Content-type': 'application/json; charset=UTF-8'}});
+    const response = await res.json();
+
+    console.log('submit response', response);
+
+}
+
+</script> 
+
+<h2>HTML Form</h2>
+
+<form id="thisForm" onsubmit="event.preventDefault(); return sendFormData()" action="/response-form">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="test"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="Testerson"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+</body>
+</html>
