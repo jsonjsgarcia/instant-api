@@ -14,8 +14,9 @@
 `npm install`
 
 ## Run API
-`node app_api.js`
+`npm run instant-api`
 
 ## Access
 GET `http://localhost:8090/`
 POST `http://localhost:8090/response-test`
+POST `http://localhost:8090/response-test-status` (raw/body) {"status": "418"}

@@ -31,3 +31,19 @@ app.post('/response-test', (req, res) => {
 
     res.send(`Got a POST request ${JSON.stringify(reqBody)}`);
 });
+
+app.post('/response-test-status', (req, res) => {
+  /* example POST: http://localhost:8090/response-test-status
+    {"status": "418"}
+  */
+ 
+    let reqBody = req.body;
+    let reqStatusTestNumber = reqBody?.status;
+
+    if (reqStatusTestNumber){
+      console.log(`Sending ${reqStatusTestNumber} ${JSON.stringify(reqBody)}`);
+      res.sendStatus(reqStatusTestNumber);
+    } else {
+       res.send(`need status in body eg: {"status": "500"} (recieved: ${JSON.stringify(reqBody)} )`);
+    }
+});

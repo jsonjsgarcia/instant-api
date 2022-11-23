@@ -4,7 +4,7 @@
   "description": "instant api",
   "main": "app_api.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "instant-api": "node app_api.js"
   },
   "author": "jgarcia",
   "license": "ISC",
