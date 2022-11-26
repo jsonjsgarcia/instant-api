@@ -1,23 +1,26 @@
-let bodyParser = require('body-parser');
-let express = require('express');
-let app = express();
+const bodyParser = require('body-parser');
+const express = require('express');
+
+const app = express();
 const path = require('path');
 // let axios = require('axios');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
 const PORT = 8090;
-app.listen(PORT, () => console.log(`Server running on: http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on: http://localhost:${PORT}`)
+);
 
 // GET Requests can serve any HTML files
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/html/index.html'));
 });
 
-app.get('/form', function(req, res) {
+app.get('/form', (req, res) => {
   res.sendFile(path.join(__dirname, '/html/test-form.html'));
 });
 
@@ -27,23 +30,27 @@ app.post('/response-form', (req, res) => {
 });
 
 app.post('/response-test', (req, res) => {
-    let reqBody = req.body;
+  const reqBody = req.body;
 
-    res.send(`Got a POST request ${JSON.stringify(reqBody)}`);
+  res.send(`Got a POST request ${JSON.stringify(reqBody)}`);
 });
 
 app.post('/response-test-status', (req, res) => {
   /* example POST: http://localhost:8090/response-test-status
     {"status": "418"}
   */
- 
-    let reqBody = req.body;
-    let reqStatusTestNumber = reqBody?.status;
 
-    if (reqStatusTestNumber){
-      console.log(`Sending ${reqStatusTestNumber} ${JSON.stringify(reqBody)}`);
-      res.sendStatus(reqStatusTestNumber);
-    } else {
-       res.send(`need status in body eg: {"status": "500"} (recieved: ${JSON.stringify(reqBody)} )`);
-    }
+  const reqBody = req.body;
+  const reqStatusTestNumber = reqBody?.status;
+
+  if (reqStatusTestNumber) {
+    console.log(`Sending ${reqStatusTestNumber} ${JSON.stringify(reqBody)}`);
+    res.sendStatus(reqStatusTestNumber);
+  } else {
+    res.send(
+      `need status in body eg: {"status": "500"} (recieved: ${JSON.stringify(
+        reqBody
+      )} )`
+    );
+  }
 });
