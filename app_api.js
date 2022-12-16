@@ -5,6 +5,13 @@ const express = require('express');
 const app = express();
 const path = require('path');
 // let axios = require('axios');
+
+const contentful = require('contentful-management');
+
+const client = contentful.createClient({
+  accessToken: process.env.CONTENTFUL_API_KEY,
+});
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -69,15 +76,8 @@ app.post('/contentful-api-check', async (req, res) => {
       `Contentful Entry ${reqStatusTestContentful} ${JSON.stringify(reqBody)}`
     );
 
-    // const contentfulApiBaseUrl = 'https://api.contentful.com';
-
-    const contentful = require('contentful-management');
-
-    const client = contentful.createClient({
-      accessToken: process.env.CONTENTFUL_API_KEY,
-    });
-
-    const contentfulSpaces = await client.getSpaces()
+    const contentfulSpaces = await client
+      .getSpaces()
     .then((response) => {
       return response?.items;
     })
@@ -87,11 +87,7 @@ app.post('/contentful-api-check', async (req, res) => {
     res.send(contentfulSpaces);
     
   } else {
-    res.send(
-      `need contentful in body (recieved: ${JSON.stringify(
-        reqBody
-      )} )`
-    );
+    res.send(`need contentful in body (recieved: ${JSON.stringify(reqBody)} )`);
   }
   
 });
