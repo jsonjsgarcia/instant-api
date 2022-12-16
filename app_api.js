@@ -1,10 +1,10 @@
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 
 const app = express();
 const path = require('path');
 // let axios = require('axios');
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -53,4 +53,45 @@ app.post('/response-test-status', (req, res) => {
       )} )`
     );
   }
+});
+
+// contentful api
+app.post('/contentful-api-check', async (req, res) => {
+  /* example POST: http://localhost:8090/contentful-api-check
+    {"contentful": true}
+  */
+
+  const reqBody = req.body;
+  const reqStatusTestContentful = reqBody?.contentful;
+
+  if (reqStatusTestContentful === true) {
+    console.log(
+      `Contentful Entry ${reqStatusTestContentful} ${JSON.stringify(reqBody)}`
+    );
+
+    // const contentfulApiBaseUrl = 'https://api.contentful.com';
+
+    const contentful = require('contentful-management');
+
+    const client = contentful.createClient({
+      accessToken: process.env.CONTENTFUL_API_KEY,
+    });
+
+    const contentfulSpaces = await client.getSpaces()
+    .then((response) => {
+      return response?.items;
+    })
+    .catch(console.error)
+
+    // send response from contentful client
+    res.send(contentfulSpaces);
+    
+  } else {
+    res.send(
+      `need contentful in body (recieved: ${JSON.stringify(
+        reqBody
+      )} )`
+    );
+  }
+  
 });
